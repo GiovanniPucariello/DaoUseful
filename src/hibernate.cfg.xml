@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!--
+            DIALECT
+                Mysql = org.hibernate.dialect.MySQLDialect
+                Postgres = org.hibernate.dialect.PostgreSQLDialect
+                Oracle = org.hibernate.dialect.OracleDialect
+        -->
+        <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect </property>
+        
+        <!--
+            DRIVER CLASS
+                Mysql = com.mysql.jdbc.Driver
+                Postgres = org.postgresql.Driver
+                Oracle = oracle.jdbc.OracleDriver
+        -->
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        
+        <!--
+            URL
+                Mysql = jdbc:mysql://localhost:3306/DaoUseful
+                Postgres = jdbc:postgresql://localhost:5432/DaoUseful
+                Oracle = jdbc:oracle:thin:@localhost:1521:DaoUseful
+        -->
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/DaoUseful</property>
+        
+        <property name="hibernate.connection.username">user</property>
+        <property name="hibernate.connection.password">passowrd</property>
+        <property name="hibernate.connection.pool_size">1</property>
+
+        <property name="hibernate.current_session_context_class">thread</property>
+        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.format_sql">true</property>
+        <property name="hibernate.statement_cache.size">0</property>
+        <property name="hibernate.default_batch_fetch_size">0</property>
+        <property name="hibernate.cglib.use_reflection_optimizer">false</property>
+        <property name="hibernate.generate_statistics">true</property>
+        
+        <!--
+            MAPPING CLASS - their models mapped
+                example: <mapping class="applicationuseful.ModelMapped"/> 
+        -->
+    </session-factory>
+</hibernate-configuration>
