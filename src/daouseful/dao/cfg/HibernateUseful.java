@@ -1,5 +1,7 @@
 package daouseful.dao.cfg;
 
+import daouseful.dto.AliasSearch;
+import daouseful.useful.Useful;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.AnnotationConfiguration;
@@ -15,31 +17,34 @@ import org.hibernate.tool.hbm2ddl.SchemaUpdate;
 public class HibernateUseful {
 
     private static SessionFactory sessionFactory = null;
-    private static Properties prop = null;
+    private static Properties properties = null;
 
+    /**
+     * 
+     * @param updateTables
+     * @return 
+     */
     public static synchronized SessionFactory getSessionFactory(boolean updateTables) {
         if (sessionFactory == null) {
-            Configuration cfg = null;
-            cfg = new AnnotationConfiguration().configure("hibernate.cfg.xml");
+            Configuration configuration = null;
+            configuration = new AnnotationConfiguration().configure("hibernate.cfg.xml");
 
-            if (prop != null) {
-                cfg.addProperties(prop);
+            if (properties != null) {
+                configuration.addProperties(properties);
             }
-            
             if(updateTables) {
-                cfg.setProperty(Environment.HBM2DDL_AUTO, "update");
-                new SchemaUpdate(cfg).execute(true, true);
-                new SchemaExport(cfg).execute(true  /* script */,
+                configuration.setProperty(Environment.HBM2DDL_AUTO, "update");
+                new SchemaUpdate(configuration).execute(true, true);
+                new SchemaExport(configuration).execute(true  /* script */,
                                                 true  /* export */,
                                                 false /* justDrop */,
                                                 true  /* justCreate */);
             }
             try {
-                sessionFactory = cfg.buildSessionFactory();
+                sessionFactory = configuration.buildSessionFactory();
             } catch (Exception e) {
-                e.printStackTrace();
+                Useful.exceptionMessageConsole(e);
             }
-
         }
         return sessionFactory;
     }

@@ -12,7 +12,6 @@ import org.hibernate.criterion.ProjectionList;
 public class ObjectSearch<T extends Serializable> {
 
     private Integer accessPage;
-    
     private Integer pageSize;
     
     /**
@@ -44,7 +43,18 @@ public class ObjectSearch<T extends Serializable> {
      * List alias for research
      */
     private List<AliasSearch> alias;
-    
+
+    /**
+     * 
+     * @param accessPage
+     * @param pageSize
+     * @param order
+     * @param mainColumn
+     * @param projections
+     * @param restrictions
+     * @param classReturn
+     * @param alias 
+     */
     public ObjectSearch(Integer accessPage, Integer pageSize, String order,
             String mainColumn, ProjectionList projections, List<Criterion> restrictions,
             Class<T> classReturn, List<AliasSearch> alias) {
@@ -58,66 +68,130 @@ public class ObjectSearch<T extends Serializable> {
         this.alias = alias;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getAccessPage() {
         return accessPage;
     }
 
+    /**
+     * 
+     * @param accessPage 
+     */
     public void setAccessPage(Integer accessPage) {
         this.accessPage = accessPage;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<AliasSearch> getAlias() {
         return alias;
     }
 
+    /**
+     * 
+     * @param alias 
+     */
     public void setAlias(List<AliasSearch> alias) {
         this.alias = alias;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getMainColumn() {
         return mainColumn;
     }
 
+    /**
+     * 
+     * @param mainColumn 
+     */
     public void setMainColumn(String mainColumn) {
         this.mainColumn = mainColumn;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public String getOrder() {
         return order;
     }
 
+    /**
+     * 
+     * @param order 
+     */
     public void setOrder(String order) {
         this.order = order;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ProjectionList getProjections() {
         return projections;
     }
 
+    /**
+     * 
+     * @param projections 
+     */
     public void setProjections(ProjectionList projections) {
         this.projections = projections;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public List<Criterion> getRestrictions() {
         return restrictions;
     }
 
+    /**
+     * 
+     * @param restrictions 
+     */
     public void setRestrictions(List<Criterion> restrictions) {
         this.restrictions = restrictions;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Class<T> getClassReturn() {
         return classReturn;
     }
 
+    /**
+     * 
+     * @param classReturn 
+     */
     public void setClassReturn(Class<T> classReturn) {
         this.classReturn = classReturn;
     }
 
+    /**
+     * 
+     * @return 
+     */
     public Integer getPageSize() {
         return pageSize;
     }
 
+    /**
+     * 
+     * @param pageSize 
+     */
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
     }

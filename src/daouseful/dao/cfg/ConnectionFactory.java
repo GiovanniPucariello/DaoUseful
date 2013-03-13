@@ -17,6 +17,11 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
 
+    /**
+     * Create connection MongoDb
+     * @param database
+     * @return 
+     */
     public static DB createMongoDbConnection(String database) {
         try {
             Mongo mongo = new Mongo("localhost", 27017);
@@ -31,6 +36,13 @@ public class ConnectionFactory {
         }
     }
 
+    /**
+     * Create connection jdbc PostgreSQL
+     * @param database
+     * @param role
+     * @param password
+     * @return 
+     */
     public static Connection createPostgresqlConnection(String database, String role, String password) {
         try {
             Class.forName("org.postgresql.Driver");
@@ -46,6 +58,13 @@ public class ConnectionFactory {
         }
     }
 
+    /**
+     * Create connection jdbc MySQL
+     * @param database
+     * @param role
+     * @param password
+     * @return 
+     */
     public static Connection createMysqlConnection(String database, String role, String password) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
@@ -61,6 +80,11 @@ public class ConnectionFactory {
         }
     }
 
+    /**
+     * Close jdbc PreparedStatement and Connection
+     * @param preparedStatement
+     * @param connection 
+     */
     public static void closePreparedStatementAndConnection(PreparedStatement preparedStatement, Connection connection) {
         try {
             preparedStatement.close();
@@ -74,6 +98,12 @@ public class ConnectionFactory {
         }
     }
 
+    /**
+     * Close jdbc ResultSet, PreparedStatement and Connection
+     * @param resultSet
+     * @param preparedStatement
+     * @param connection 
+     */
     public static void closeResultSetAndPreparedStatementAndConnection(ResultSet resultSet,
             PreparedStatement preparedStatement,
             Connection connection) {

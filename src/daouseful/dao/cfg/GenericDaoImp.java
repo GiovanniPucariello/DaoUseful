@@ -23,33 +23,57 @@ public class GenericDaoImp<T, ID extends Serializable> implements GenericDao<T, 
     protected Class<T> persistentClass = (Class<T>) DaoUseful.getTypeArguments(GenericDaoImp.class, this.getClass()).get(0);
     private boolean transaction;
 
+    /**
+     * Start criteria
+     * @return 
+     */
     public Criteria startCriteria() {
-        Criteria cri = session.createCriteria(persistentClass, "tab");
-        return cri;
+        Criteria criteria = session.createCriteria(persistentClass, "tab");
+        return criteria;
     }
 
+    /**
+     * Get session
+     */
     public void getSession() {
         session = HibernateUseful.getSessionFactory(false).openSession();
     }
 
+    /**
+     * Close session
+     */
     public void closingSession() {
         session.close();
         transaction = false;
     }
 
+    /**
+     * Start transaction
+     */
     public void startTransaction() {
         session.beginTransaction();
         transaction = true;
     }
 
+    /**
+     * Realize commit
+     */
     public void realizeCommit() {
         session.getTransaction().commit();
     }
 
+    /**
+     * Realize roll back
+     */
     public void realizeRollback() {
         session.getTransaction().rollback();
     }
 
+    /**
+     * Find object by id
+     * @param id
+     * @return 
+     */
     @Override
     public T findById(ID id) {
         try {
@@ -68,18 +92,23 @@ public class GenericDaoImp<T, ID extends Serializable> implements GenericDao<T, 
 
     }
 
+    /**
+     * Find all objects
+     * @param fieldOrder
+     * @return 
+     */
     @Override
     public List<T> findAll(String fieldOrder) {
         try {
             getSession();
-            Criteria cri = startCriteria();
-            cri.setCacheMode(CacheMode.IGNORE);
+            Criteria criteria = startCriteria();
+            criteria.setCacheMode(CacheMode.IGNORE);
             if (StringUtils.isNotEmpty(fieldOrder)) {
-                cri.addOrder(Order.asc(fieldOrder));
+                criteria.addOrder(Order.asc(fieldOrder));
             }
-            List<T> lista = cri.list();
+            List<T> list = criteria.list();
             closingSession();
-            return lista;
+            return list;
         } catch (HibernateException e) {
             treatException(e);
             closingSession();
@@ -90,19 +119,25 @@ public class GenericDaoImp<T, ID extends Serializable> implements GenericDao<T, 
         }
     }
 
+    /**
+     * Find all objects by sql
+     * @param sql
+     * @param fieldOrder
+     * @return 
+     */
     @Override
     public List<T> findBySql(String sql, String fieldOrder) {
         try {
             getSession();
-            Criteria cri = startCriteria();
-            cri.setCacheMode(CacheMode.IGNORE);
-            cri.add(Restrictions.sqlRestriction(sql));
+            Criteria criteria = startCriteria();
+            criteria.setCacheMode(CacheMode.IGNORE);
+            criteria.add(Restrictions.sqlRestriction(sql));
             if (StringUtils.isNotEmpty(fieldOrder)) {
-                cri.addOrder(Order.asc(fieldOrder));
+                criteria.addOrder(Order.asc(fieldOrder));
             }
-            List lista = cri.list();
+            List list = criteria.list();
             closingSession();
-            return lista;
+            return list;
         } catch (HibernateException e) {
             treatException(e);
             return new ArrayList<T>();
@@ -112,6 +147,11 @@ public class GenericDaoImp<T, ID extends Serializable> implements GenericDao<T, 
         }
     }
 
+    /**
+     * Save object
+     * @param entity
+     * @return 
+     */
     @Override
     public boolean save(T entity) {
         try {
@@ -130,6 +170,11 @@ public class GenericDaoImp<T, ID extends Serializable> implements GenericDao<T, 
         }
     }
 
+    /**
+     * Update object
+     * @param entity
+     * @return 
+     */
     @Override
     public boolean update(T entity) {
         try {
@@ -148,6 +193,11 @@ public class GenericDaoImp<T, ID extends Serializable> implements GenericDao<T, 
         }
     }
 
+    /**
+     * Save or update object
+     * @param entity
+     * @return 
+     */
     @Override
     public boolean saveOrUpdate(T entity) {
         try {
@@ -166,6 +216,11 @@ public class GenericDaoImp<T, ID extends Serializable> implements GenericDao<T, 
         }
     }
 
+    /**
+     * Delete object
+     * @param entity
+     * @return 
+     */
     @Override
     public boolean delete(T entity) {
         try {
@@ -184,6 +239,11 @@ public class GenericDaoImp<T, ID extends Serializable> implements GenericDao<T, 
         }
     }
 
+    /**
+     * Returns the largest value of the attribute
+     * @param attribute
+     * @return 
+     */
     @Override
     public Long max(String attribute) {
         try {
@@ -199,6 +259,12 @@ public class GenericDaoImp<T, ID extends Serializable> implements GenericDao<T, 
         }
     }
     
+    /**
+     * Treat execption:
+     * Rollback if any transaction
+     * Close session
+     * @param e 
+     */
     private void treatException(Exception e) {
         if(transaction) realizeRollback();
         closingSession();

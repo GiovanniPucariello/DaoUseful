@@ -12,6 +12,13 @@ import java.util.Map;
  */
 public class DaoUseful {
     
+    /**
+     * 
+     * @param <T>
+     * @param baseClass
+     * @param childClass
+     * @return 
+     */
     public static <T> List<Class<?>> getTypeArguments(Class<T> baseClass,
                     Class<? extends T> childClass) {
         Map<Type, Type> resolvedTypes = new HashMap<Type, Type>();
@@ -60,8 +67,12 @@ public class DaoUseful {
         }
         return typeArgumentsAsClasses;
     }    
-        
- 
+
+    /**
+     * 
+     * @param type
+     * @return 
+     */
     private static Class<?> getClass(Type type) {
         if (type instanceof Class) {
                 return (Class) type;
